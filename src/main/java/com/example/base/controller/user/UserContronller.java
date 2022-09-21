@@ -4,6 +4,7 @@ package com.example.base.controller.user;
 import com.example.base.common.dto.FormResponse;
 import com.example.base.common.dto.QueryDto;
 import com.example.base.common.dto.Upload;
+import com.example.base.common.util.ConvertDtoToEntity;
 import com.example.base.common.util.response.ResponseHander;
 import com.example.base.common.util.upload.StorageFileNotFoundException;
 import com.example.base.common.util.upload.StorageService;
@@ -20,9 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
+import org.modelmapper.ModelMapper;
 import javax.validation.Valid;
 
 @RestController
@@ -30,7 +29,6 @@ import javax.validation.Valid;
 public class UserContronller {
 
     private final StorageService storageService;
-
 
     @Autowired
     private UserService userService;
@@ -45,9 +43,10 @@ public class UserContronller {
         return ResponseHander.response(userService.findAlls(queryDto), HttpStatus.OK);
     }
     @PostMapping("users")
-    public ResponseEntity<Object> createUser(@Valid  @RequestBody  UserDto userEntity) throws JsonProcessingException {
-        System.out.println(userEntity);
-        return ResponseHander.response(userEntity, HttpStatus.OK);
+    public ResponseEntity<Object> createUser(@Valid  @RequestBody  UserDto userDto) throws JsonProcessingException {
+        UserEntity userEntity=ConvertDtoToEntity.map(userDto,UserEntity.class);
+
+        return ResponseHander.response(this.userService.create(userEntity), HttpStatus.OK);
     }
     @PutMapping("users")
     public ResponseEntity<Object> updateUser(@RequestBody UserEntity userEntity) throws JsonProcessingException {

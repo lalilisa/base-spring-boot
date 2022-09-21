@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 import java.util.Map;
 
 
-@Data
-@NoArgsConstructor
+
 public class QueryUserDto extends QueryDto {
 
     // thuộc tính để tìm kiếm
