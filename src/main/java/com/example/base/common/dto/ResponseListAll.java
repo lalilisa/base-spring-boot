@@ -4,7 +4,7 @@ package com.example.base.common.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+// form trả về khi get all
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+//Form response exception
 public class ApiError {
+    public boolean success;
     public String message;
     public List<String> details;
 
@@ -13,11 +15,13 @@ public class ApiError {
     }
 
     public ApiError(String message, String... details) {
+        this.success=false;
         this.message = message;
         this.details = Arrays.asList(details);
     }
 
     public ApiError(Exception ex, String... details) {
+        this.success=false;
         String classNameOfException = ex.getClass().getName();
         int lastDotIndex = classNameOfException.lastIndexOf(".");
         String shortExceptionName;

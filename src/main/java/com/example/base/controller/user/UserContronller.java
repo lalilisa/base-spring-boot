@@ -1,11 +1,13 @@
 package com.example.base.controller.user;
 
 
+import com.example.base.common.dto.FormResponse;
 import com.example.base.common.dto.QueryDto;
 import com.example.base.common.dto.Upload;
 import com.example.base.common.util.response.ResponseHander;
 import com.example.base.common.util.upload.StorageFileNotFoundException;
 import com.example.base.common.util.upload.StorageService;
+import com.example.base.dto.QueryUserDto;
 import com.example.base.dto.UserDto;
 import com.example.base.entity.user.UserEntity;
 import com.example.base.service.UserService;
@@ -38,7 +40,7 @@ public class UserContronller {
     }
 
     @GetMapping("users")
-    public ResponseEntity<Object> listUser(@ParameterObject QueryDto queryDto) throws JsonProcessingException {
+    public ResponseEntity<Object> listUser(@ParameterObject QueryUserDto queryDto) throws JsonProcessingException {
         System.out.println(queryDto);
         return ResponseHander.response(userService.findAlls(queryDto), HttpStatus.OK);
     }
@@ -73,16 +75,16 @@ public class UserContronller {
         return ResponseEntity.notFound().build();
     }
 
-    @PostMapping(value = "/s",consumes = "multipart/form-data")
-    public String handleFileUpload(@RequestParam("file") MultipartFile file,
-                                   RedirectAttributes redirectAttributes) {
+    @GetMapping(value = "{id}")
+    public ResponseEntity<Object> getOneUser(@PathVariable("id") Long id) {
+        UserEntity userEntity=this.userService.findOneById(id);
+        return ResponseHander.response(userEntity,HttpStatus.OK);
 
-        storageService.store(file);
-        redirectAttributes.addFlashAttribute("message",
-                "You successfully uploaded " + file.getOriginalFilename() + "!");
-
-        return "redirect:/";
     }
-
+    @DeleteMapping(value = "{id}")
+    public ResponseEntity<Object> remove(@PathVariable("id") Long id) {
+        this.userService.deleleById(id);
+        return ResponseHander.response(null,HttpStatus.OK);
+    }
 
 }

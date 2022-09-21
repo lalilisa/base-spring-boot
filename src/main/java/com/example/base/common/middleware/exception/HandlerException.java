@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
-
+// Xử lý exception
 @RestControllerAdvice
 public class HandlerException extends ResponseEntityExceptionHandler {
 

@@ -21,29 +21,35 @@ import java.util.Map;
 @Data
 @NoArgsConstructor
 public class QueryDto {
+    // số lượng data tối đa 1 trang
     @Schema(example = "1")
     int pageSize;
 
+    // trang thứ n
     @Schema(example = "2")
     int pageNumber;
 
-    @Schema(allowableValues = {"username","password"},defaultValue = "[\"username\",\"password\"]")
+
+    // thuộc tính để tìm kiếm
     private String[] property;
 
+    // danh sách thuộc tính để sắp xếp
     @Schema()
     private String[] sort;
 
-
+    // keyword tìm kiếm
     @Schema(example = "im")
     private String search;
 
+    //filter truyền vào 1 chuỗi json string  VD: {"username":"trimai"}
 //    @Parameter(hidden = true)
     private String filter;
 
+    //Chuyển filter thành Map
     @Parameter(hidden = true)
     private Map<String,Object> filters;
 
-
+    //convert string filter sang json
     public void setFilters() throws JsonProcessingException {
         if(this.filter!=null && this.filter.length()>0) {
             ObjectMapper objectMapper = new ObjectMapper();

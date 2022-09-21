@@ -1,7 +1,7 @@
 package com.example.base.common.middleware.exception;
 
 import org.springframework.http.HttpStatus;
-
+// Custom exception
 public class CustomException extends RuntimeException {
     public HttpStatus status;
 

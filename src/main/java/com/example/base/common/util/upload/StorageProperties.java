@@ -8,6 +8,7 @@ public class StorageProperties {
     /**
      * Folder location for storing files
      */
+    // thư mục chứa ảnh
     private String location = "upload";
 
     public String getLocation() {

@@ -1,23 +1,12 @@
-version: "3.2"
+version: '3.3'
 services:
-  rabbitmq:
-    image: rabbitmq:3-management-alpine
-    container_name: 'rabbitmq'
-    ports:
-      - 5672:5672
-      - 15672:15672
-    volumes:
-      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
-      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
-    networks:
-      - rabbitmq_go_net
+  db:
+    image: mysql:latest
+    restart: always
     environment:
-      - "RABBITMQ_DEFAULT_PASS=pass"
-      - "RABBITMQ_DEFAULT_USER=user"
-      - "RABBITMQ_DEFAULT_VHOST='vhost'"
-    entrypoint:
-        - "rabbitmq-server"
-
-networks:
-  rabbitmq_go_net:
-    driver: bridge
+      MYSQL_ROOT_PASSWORD: trimai
+      MYSQL_DATABASE: base
+      MYSQL_USER: trimai
+      MYSQL_PASSWORD: trimai
+    ports:
+      - '3008:3306'
